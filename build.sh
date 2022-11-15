@@ -28,6 +28,7 @@ fetch-commit-id() {
 compare-commit-id() {
     if [[ -f commit-id/$DEVICE-id ]]; then
 		PREVIOUS_COMMIT_ID=$(cat commit-id/$DEVICE-id)
+        rm commit-id/$DEVICE-id
         if [[ $PREVIOUS_COMMIT_ID == "" ]]; then
             echo "Warning: The cached commit-id is empty"
             echo "Did something went wrong?"
@@ -51,3 +52,13 @@ compare-commit-id() {
 }
 
 fetch-commit-id
+
+# Set repository variables
+# This is done to ensure the above functions are executed.
+CURRENT_DIR=$(pwd)
+DEVICE_DIR=$CURRENT_DIR/$DEVICE
+BUILD_DIR=$DEVICE_DIR
+
+echo $CURRENT_DIR
+echo $DEVICE_DIR
+echo $BUILD_DIR
