@@ -7,5 +7,8 @@
 DEVICE="$1"
 
 commit-id() {
+    echo "Checking commit-id of $DEVICE"
 
 }
+
+commit-id
