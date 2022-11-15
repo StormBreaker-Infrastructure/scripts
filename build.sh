@@ -41,6 +41,7 @@ compare-commit-id() {
         else
             echo "Triggering the build for $DEVICE"
             echo "$COMMIT_ID_FETCH" >> commit-id/$DEVICE-id
+            set_build_variables
 	    fi
     else
         echo "Warning: No previous configuration Found!"
@@ -55,10 +56,11 @@ fetch-commit-id
 
 # Set repository variables
 # This is done to ensure the above functions are executed.
-CURRENT_DIR=$(pwd)
-DEVICE_DIR=$CURRENT_DIR/$DEVICE
-BUILD_DIR=$DEVICE_DIR
-
-echo $CURRENT_DIR
-echo $DEVICE_DIR
-echo $BUILD_DIR
+set_build_variables() {
+    CURRENT_DIR=$(pwd)
+    DEVICE_DIR=$CURRENT_DIR/$DEVICE
+    BUILD_DIR=$DEVICE_DIR
+    echo $CURRENT_DIR
+    echo $DEVICE_DIR
+    echo $BUILD_DIR
+}
