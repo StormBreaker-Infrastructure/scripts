@@ -17,13 +17,23 @@ fetch-commit-id() {
     echo "Fetching remote information of the device"
     COMMIT_ID_FETCH=$(git ls-remote https://github.com/stormbreaker-project/$DEVICE | head -1 | cut -f -1)
     echo $COMMIT_ID_FETCH
-    compare-commit-id
+    if [[ $COMMIT_ID_FETCH == "" ]]; then
+        echo "Warning: Fetched commit id is empty!"
+        echo "Did you enter the correct device name?"
+    else
+        compare-commit-id
+    fi
 }
 
 compare-commit-id() {
     if [[ -f commit-id/$DEVICE-id ]]; then
 		PREVIOUS_COMMIT_ID=$(cat commit-id/$DEVICE-id)
-        if [ $COMMIT_ID_FETCH = $PREVIOUS_COMMIT_ID ]; then
+        if [[ $PREVIOUS_COMMIT_ID == "" ]]; then
+            echo "Warning: The cached commit-id is empty"
+            echo "Did something went wrong?"
+            echo "Removing the saved commit-id"
+            rm commit-id/$DEVICE-id
+        elif [ $COMMIT_ID_FETCH = $PREVIOUS_COMMIT_ID ]; then
             echo "No need to trigger the build"
             echo "If this is your first time triggering for a device"
             echo "Kindly push a commit to your kernel source."
