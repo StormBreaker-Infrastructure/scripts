@@ -52,8 +52,6 @@ compare-commit-id() {
 	fi
 }
 
-fetch-commit-id
-
 # Set repository variables
 # This is done to ensure the above functions are executed.
 set_build_variables() {
@@ -64,3 +62,5 @@ set_build_variables() {
     echo $DEVICE_DIR
     echo $BUILD_DIR
 }
+
+fetch-commit-id
