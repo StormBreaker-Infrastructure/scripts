@@ -14,6 +14,9 @@ DEVICE="$1"
 
 commit-id() {
     echo "Checking commit-id of $DEVICE"
+    echo "Fetching remote information of the device"
+    COMMIT_ID=$(git ls-remote https://github.com/stormbreaker-project/$DEVICE | head -1 | cut -f -1)
+    echo $COMMIT_ID
 }
 
 commit-id
