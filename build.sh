@@ -25,6 +25,8 @@ compare-commit-id() {
 		PREVIOUS_COMMIT_ID=$(cat commit-id/$DEVICE-id)
         if [ $COMMIT_ID_FETCH = $PREVIOUS_COMMIT_ID ]; then
             echo "No need to trigger the build"
+            echo "If this is your first time triggering for a device"
+            echo "Kindly push a commit to your kernel source."
         else
             echo "Triggering the build for $DEVICE"
             echo "$COMMIT_ID_FETCH" >> commit-id/$DEVICE-id
