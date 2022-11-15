@@ -15,14 +15,27 @@ DEVICE="$1"
 fetch-commit-id() {
     echo "Checking commit-id of $DEVICE"
     echo "Fetching remote information of the device"
-    COMMIT_ID=$(git ls-remote https://github.com/stormbreaker-project/$DEVICE | head -1 | cut -f -1)
-    echo $COMMIT_ID
+    COMMIT_ID_FETCH=$(git ls-remote https://github.com/stormbreaker-project/$DEVICE | head -1 | cut -f -1)
+    echo $COMMIT_ID_FETCH
     compare-commit-id
-    echo "$COMMIT_ID" >> commit-id/$DEVICE-id
 }
 
 compare-commit-id() {
-    echo "hello"
+    if [[ -f commit-id/$DEVICE-id ]]; then
+		PREVIOUS_COMMIT_ID=$(cat commit-id/$DEVICE-id)
+        if [ $COMMIT_ID_FETCH = $PREVIOUS_COMMIT_ID ]; then
+            echo "No need to trigger the build"
+        else
+            echo "Triggering the build for $DEVICE"
+            echo "$COMMIT_ID_FETCH" >> commit-id/$DEVICE-id
+	    fi
+    else
+        echo "Warning: No previous configuration Found!"
+        echo "Kindly push a commit to your kernel source."
+        echo "Re-trigger the script after this step."
+        echo "This is added to ensure no issues in script arguments."
+        echo "$COMMIT_ID_FETCH" >> commit-id/$DEVICE-id
+	fi
 }
 
 fetch-commit-id
