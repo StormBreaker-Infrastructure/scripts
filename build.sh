@@ -114,6 +114,18 @@ cloneCompiler() {
     $CURRENT_DIR/clang/bin/clang --version
 }
 
+buildFail() {
+    BUILD_FAIL=true
+}
+
+buildPass() {
+    BUILD_PASS=true
+}
+
+genJSON() {
+    echo "Generating JSON"
+}
+
 cloneError() {
     echo "Clone Failed!"
 }
@@ -141,7 +153,7 @@ makeDefconfig() {
 
 makeKernel() {
     if [[ "$VERSION" == "3.18" ]]; then
-        make -j$(nproc --all) $MAKE_PARAMS
+        make -j$(nproc --all) $MAKE_PARAMS || buildFail
     fi
 }
 
@@ -150,6 +162,7 @@ triggerBuild() {
     echo "Starting Build"
     echo "Using config $DEVICE_CONFIG"
     cd $BUILD_DIR
+    START=$(date +"%s")
     makeDefconfig
     makeKernel
 }
