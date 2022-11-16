@@ -14,7 +14,7 @@
 KBUILD_BUILD_HOST="Stormbot"
 KBUILD_BUILD_USER="StormCI"
 DEVICE="$1"
-DEVICE_CONFIG="$2"
+# DEVICE_CONFIG="$2"
 
 fetch-commit-id() {
     echo "Checking commit-id of $DEVICE"
@@ -120,7 +120,21 @@ cloneError() {
 }
 
 makeDefconfig() {
-    make O=out ARCH=arm64 $DEVICE_CONFIG
+    DEFCONFIG=$(echo $device'-perf_defconfig')
+	if [[ -f arch/arm64/configs/$DEFCONFIG ]]; then
+        make O=out ARCH=arm64 $DEFCONFIG
+    elif [[ -f arch/arm64/configs/vendor/$DEFCONFIG ]]; then
+        make O=out ARCH=arm64 vendor/$DEFCONFIG
+	else
+        DEFCONFIG=$(echo $device'_defconfig')
+        if [[ -f arch/arm64/configs/$DEFCONFIG ]]; then
+            make O=out ARCH=arm64 $DEFCONFIG
+        elif [[ -f arch/arm64/configs/vendor/$DEFCONFIG ]]; then
+            make O=out ARCH=arm64 vendor/$DEFCONFIG
+        else
+            echo "Defconfig not found"
+        fi
+    fi
 }
 
 triggerBuild() {
