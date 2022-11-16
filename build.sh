@@ -129,6 +129,12 @@ genJSON() {
     DIFF=$(($END - $START))
     echo $DIFF
     echo "Generating JSON"
+    BRANCH="main" # Default branch of the repositories
+    GEN_JSON_BODY=$(jq --null-input \
+                    --arg device "$DEVICE" \
+                    --arg branch "$BRANCH" \
+                    '{"device": $DEVICE, "branch": $BRANCH}')
+    echo $GEN_JSON_BODY
     exit 0
 }
 
