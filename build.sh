@@ -142,11 +142,14 @@ genJSON() {
     echo $DIFF
     echo "Generating JSON"
     BRANCH="main" # Default branch of the repositories
+    # TIME="$((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s)"
+    TIME="$DIFF seconds"
     GEN_JSON_BODY=$(jq --null-input \
                     --arg device "$DEVICE" \
                     --arg branch "$BRANCH" \
                     --arg status "$STATUS" \
-                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\"}")
+                    --arg build "$TIME" \
+                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\", "time": \"$TIME\"}")
     echo $GEN_JSON_BODY
     cd $CURRENT_DIR
     echo "$GEN_JSON_BODY" >> json/$DEVICE.json
