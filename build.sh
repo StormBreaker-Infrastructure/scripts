@@ -129,6 +129,7 @@ genJSON() {
     DIFF=$(($END - $START))
     echo $DIFF
     echo "Generating JSON"
+    exit 0
 }
 
 cloneError() {
@@ -165,7 +166,6 @@ makeKernel() {
 triggerBuild() {
     cloneCompiler
     echo "Starting Build"
-    echo "Using config $DEVICE_CONFIG"
     cd $BUILD_DIR
     START=$(date +"%s")
     makeDefconfig
