@@ -20,7 +20,6 @@ fetch-commit-id() {
     echo "Checking commit-id of $DEVICE"
     echo "Fetching remote information of the device"
     COMMIT_ID_FETCH=$(git ls-remote https://github.com/stormbreaker-project/$DEVICE | head -1 | cut -f -1)
-    echo $COMMIT_ID_FETCH
     if [[ $COMMIT_ID_FETCH == "" ]]; then
         echo "Warning: Fetched commit id is empty!"
         echo "Did you enter the correct device name?"
