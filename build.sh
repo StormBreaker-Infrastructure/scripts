@@ -119,17 +119,20 @@ cloneError() {
 }
 
 makeDefconfig() {
+    MAKE_PARAMS="O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- \
+                CROSS_COMPILE=aarch64-linux-android- \
+                CROSS_COMPILE_ARM32=arm-linux-androideabi-"
     DEFCONFIG=$(echo $DEVICE'-perf_defconfig')
 	if [[ -f arch/arm64/configs/$DEFCONFIG ]]; then
-        make O=out ARCH=arm64 $DEFCONFIG
+        make $MAKE_PARAMS $DEFCONFIG
     elif [[ -f arch/arm64/configs/vendor/$DEFCONFIG ]]; then
-        make O=out ARCH=arm64 vendor/$DEFCONFIG
+        make $MAKE_PARAMS vendor/$DEFCONFIG
 	else
         DEFCONFIG=$(echo $DEVICE'_defconfig')
         if [[ -f arch/arm64/configs/$DEFCONFIG ]]; then
-            make O=out ARCH=arm64 $DEFCONFIG
+            make $MAKE_PARAMS $DEFCONFIG
         elif [[ -f arch/arm64/configs/vendor/$DEFCONFIG ]]; then
-            make O=out ARCH=arm64 vendor/$DEFCONFIG
+            make $MAKE_PARAMS vendor/$DEFCONFIG
         else
             echo "Defconfig not found"
         fi
@@ -138,7 +141,7 @@ makeDefconfig() {
 
 makeKernel() {
     if [[ "$VERSION" == "3.18" ]]; then
-        make -j$(nproc --all) O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi-
+        make -j$(nproc --all) $MAKE_PARAMS
     fi
 }
 
