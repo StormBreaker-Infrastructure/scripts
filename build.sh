@@ -116,13 +116,18 @@ cloneCompiler() {
 
 buildFail() {
     BUILD_FAIL=true
+    genJSON
 }
 
 buildPass() {
     BUILD_PASS=true
+    genJSON
 }
 
 genJSON() {
+    END=$(date +"%s")
+    DIFF=$(($END - $START))
+    echo $DIFF
     echo "Generating JSON"
 }
 
