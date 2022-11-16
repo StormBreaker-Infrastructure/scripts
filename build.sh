@@ -14,6 +14,7 @@
 KBUILD_BUILD_HOST="Stormbot"
 KBUILD_BUILD_USER="StormCI"
 DEVICE="$1"
+DEVICE_CONFIG="$2"
 
 fetch-commit-id() {
     echo "Checking commit-id of $DEVICE"
@@ -76,12 +77,35 @@ clone_device() {
     fi
 }
 
+cloneGCC() {
+	git clone --depth=1 https://github.com/stormbreaker-project/aarch64-linux-android-4.9 $TC_DIR/gcc >/dev/null 2>&1
+	git clone --depth=1 https://github.com/stormbreaker-project/arm-linux-androideabi-4.9 $TC_DIR/gcc_32 >/dev/null 2>&1
+}
+
+cloneClang11() {
+    git clone --depth=1 -b aosp-11.0.5 https://github.com/sohamxda7/llvm-stable $TC_DIR/clang >/dev/null 2>&1
+	export KBUILD_COMPILER_STRING="$(${TC_DIR}/clang/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//'))"
+}
+
+cloneCompiler() {
+    TC_DIR=$CURRENT_DIR
+    echo "Cloning Compilers"
+    cloneGCC
+    cloneClang11
+    echo "Setting up PATH"
+    PATH="${TC_DIR}/clang/bin:${TC_DIR}/gcc/bin:${TC_DIR}/gcc_32/bin:${PATH}"
+    echo KBUILD_COMPILER_STRING
+    $CURRENT_DIR/clang/bin/clang --version
+}
+
 cloneError() {
     echo "Clone Failed!"
 }
 
 triggerBuild() {
+    cloneCompiler
     echo "Starting Build"
+    echo "Using config $DEVICE_CONFIG"
 }
 
 fetch-commit-id
