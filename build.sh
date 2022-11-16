@@ -114,6 +114,9 @@ triggerBuild() {
     cloneCompiler
     echo "Starting Build"
     echo "Using config $DEVICE_CONFIG"
+    cd $BUILD_DIR
+    make O=out ARCH=arm64 $DEVICE_CONFIG
+    make -j$(nproc --all) O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi-
 }
 
 fetch-commit-id
