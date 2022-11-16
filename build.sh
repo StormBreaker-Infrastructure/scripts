@@ -116,12 +116,24 @@ cloneCompiler() {
 
 buildFail() {
     BUILD_FAIL=true
+    setStatus
     genJSON
 }
 
 buildPass() {
     BUILD_PASS=true
+    setStatus
     genJSON
+}
+
+setStatus() {
+    if [[ "$BUILD_FAIL" == "true" ]]; then
+        STATUS="Failed"
+    elif [[ "$BUILD_PASS" == "true" ]]; then
+        STATUS="Passing"
+    else
+        STATUS="Undefined"
+    fi
 }
 
 genJSON() {
