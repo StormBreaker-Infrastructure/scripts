@@ -120,13 +120,13 @@ cloneError() {
 }
 
 makeDefconfig() {
-    DEFCONFIG=$(echo $device'-perf_defconfig')
+    DEFCONFIG=$(echo $DEVICE'-perf_defconfig')
 	if [[ -f arch/arm64/configs/$DEFCONFIG ]]; then
         make O=out ARCH=arm64 $DEFCONFIG
     elif [[ -f arch/arm64/configs/vendor/$DEFCONFIG ]]; then
         make O=out ARCH=arm64 vendor/$DEFCONFIG
 	else
-        DEFCONFIG=$(echo $device'_defconfig')
+        DEFCONFIG=$(echo $DEVICE'_defconfig')
         if [[ -f arch/arm64/configs/$DEFCONFIG ]]; then
             make O=out ARCH=arm64 $DEFCONFIG
         elif [[ -f arch/arm64/configs/vendor/$DEFCONFIG ]]; then
