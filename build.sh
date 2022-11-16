@@ -133,7 +133,7 @@ genJSON() {
     GEN_JSON_BODY=$(jq --null-input \
                     --arg device "$DEVICE" \
                     --arg branch "$BRANCH" \
-                    '{"device": $DEVICE, "branch": $BRANCH}')
+                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\"}")
     echo $GEN_JSON_BODY
     exit 0
 }
