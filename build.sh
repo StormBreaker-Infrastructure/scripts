@@ -87,8 +87,10 @@ clone_device() {
 }
 
 kernelVersion() {
-	KERNEL_VERSION="$(cat Makefile | grep PATCHLEVEL | head -n 1 | sed "s|.*=||1" | sed "s| ||g")"
-    echo $KERNEL_VERSION
+	KERNEL_VERSION="$( cat $DEVICE/Makefile | grep VERSION | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
+    KERNEL_PATCHLEVEL="$( cat $DEVICE/Makefile | grep PATCHLEVEL | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
+    echo "${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}"
+
 }
 
 cloneGCC() {
