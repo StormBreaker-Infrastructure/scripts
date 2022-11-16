@@ -14,7 +14,6 @@
 KBUILD_BUILD_HOST="Stormbot"
 KBUILD_BUILD_USER="StormCI"
 DEVICE="$1"
-# DEVICE_CONFIG="$2"
 
 fetch-commit-id() {
     echo "Checking commit-id of $DEVICE"
