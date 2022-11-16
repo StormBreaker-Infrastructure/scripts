@@ -89,7 +89,8 @@ clone_device() {
 kernelVersion() {
 	KERNEL_VERSION="$( cat $DEVICE/Makefile | grep VERSION | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
     KERNEL_PATCHLEVEL="$( cat $DEVICE/Makefile | grep PATCHLEVEL | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
-    echo "${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}"
+    VERSION="${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}"
+    echo $VERSION
 
 }
 
@@ -124,7 +125,9 @@ triggerBuild() {
     echo "Using config $DEVICE_CONFIG"
     cd $BUILD_DIR
     make O=out ARCH=arm64 $DEVICE_CONFIG
-    make -j$(nproc --all) O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi-
+    if [[ "$VERSION" == "3.18" ]]; then
+        make -j$(nproc --all) O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi-
+    fi
 }
 
 fetch-commit-id
