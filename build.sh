@@ -151,7 +151,8 @@ genJSON() {
                     --arg status "$STATUS" \
                     --arg build "$TIME" \
                     --arg commit "$COMMIT_ID" \
-                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\", "time": \"$TIME\", "commit": \"$COMMIT_ID\"}")
+                    --arg message "$MESSAGE" \
+                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\", "time": \"$TIME\", "commit": \"$COMMIT_ID\", "nesssage": \"$NESSAGE\"}")
     echo $GEN_JSON_BODY
     cd $CURRENT_DIR
     echo "$GEN_JSON_BODY" >> json/$DEVICE.json
