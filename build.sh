@@ -65,7 +65,7 @@ set_build_variables() {
 clone_device() {
     GITHUB_ORG_lINK="https://github.com/stormbreaker-project"
     echo "Cloning device repository"
-    git clone $GITHUB_ORG_lINK/$DEVICE $DEVICE
+    git clone --depth=1 $GITHUB_ORG_lINK/$DEVICE $DEVICE
 
 }
 
