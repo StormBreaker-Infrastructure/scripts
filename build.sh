@@ -58,9 +58,15 @@ set_build_variables() {
     CURRENT_DIR=$(pwd)
     DEVICE_DIR=$CURRENT_DIR/$DEVICE
     BUILD_DIR=$DEVICE_DIR
-    echo $CURRENT_DIR
-    echo $DEVICE_DIR
-    echo $BUILD_DIR
+    clone_device
+}
+
+# Clone the device repository
+clone_device() {
+    GITHUB_ORG_lINK="https://github.com/stormbreaker-project"
+    echo "Cloning device repository"
+    git clone $GITHUB_ORG_lINK/$DEVICE $DEVICE
+
 }
 
 fetch-commit-id
