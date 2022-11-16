@@ -66,11 +66,19 @@ clone_device() {
     GITHUB_ORG_lINK="https://github.com/stormbreaker-project"
     echo "Cloning device repository"
     git clone --depth=1 $GITHUB_ORG_lINK/$DEVICE $DEVICE  >/dev/null 2>&1 || cloneError
-
+    if [[ -f $DEVICE/Makefile ]]; then
+        triggerBuild
+    else
+        echo "Something went wrong while cloning."
+    fi
 }
 
 cloneError() {
     echo "Clone Failed!"
+}
+
+triggerBuild() {
+    echo "Starting Build"
 }
 
 fetch-commit-id
