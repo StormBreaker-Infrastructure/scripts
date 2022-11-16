@@ -148,6 +148,7 @@ genJSON() {
                     --arg status "$STATUS" \
                     "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\"}")
     echo $GEN_JSON_BODY
+    cd $CURRENT_DIR
     echo "$GEN_JSON_BODY" >> json/$DEVICE.json
     exit 0
 }
