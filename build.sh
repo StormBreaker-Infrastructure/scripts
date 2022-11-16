@@ -146,6 +146,7 @@ genJSON() {
     TIME="$DIFF seconds"
     COMMIT_ID=$(git log --oneline -1 | cut -f 1 -d " ")
     MESSAGE=$(git log --format=%B -n 1 HEAD)
+    COMPILER_VERSION=$(${TC_DIR}/clang/bin/clang --version | head -n 1 | cut -f6,8 -d " ")
     GEN_JSON_BODY=$(jq --null-input \
                     --arg device "$DEVICE" \
                     --arg branch "$BRANCH" \
@@ -153,7 +154,8 @@ genJSON() {
                     --arg build "$TIME" \
                     --arg commit "$COMMIT_ID" \
                     --arg message "$MESSAGE" \
-                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\", "time": \"$TIME\", "commit": \"$COMMIT_ID\", "messsage": \"$MESSAGE\"}")
+                    --arg compiler "$COMPILER_VERSION" \
+                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\", "time": \"$TIME\", "commit": \"$COMMIT_ID\", "messsage": \"$MESSAGE\", "compiler": \"$COMPILER_VERSION\"}")
     echo $GEN_JSON_BODY
     cd $CURRENT_DIR
     echo "$GEN_JSON_BODY" >> json/$DEVICE.json
