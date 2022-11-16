@@ -145,6 +145,7 @@ genJSON() {
     # TIME="$((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s)"
     TIME="$DIFF seconds"
     COMMIT_ID=$(git log --oneline -1 | cut -f 1 -d " ")
+    MESSAGE=$(git log --format=%B -n 1 HEAD)
     GEN_JSON_BODY=$(jq --null-input \
                     --arg device "$DEVICE" \
                     --arg branch "$BRANCH" \
