@@ -33,24 +33,31 @@ compare-commit-id() {
 		PREVIOUS_COMMIT_ID=$(cat commit-id/$DEVICE-id)
         rm commit-id/$DEVICE-id
         if [[ $PREVIOUS_COMMIT_ID == "" ]]; then
+            echo ""
             echo "Warning: The cached commit-id is empty"
             echo "Did something went wrong?"
             echo "Removing the saved commit-id"
+            echo ""
             rm commit-id/$DEVICE-id
         elif [ $COMMIT_ID_FETCH = $PREVIOUS_COMMIT_ID ]; then
+            echo ""
             echo "No need to trigger the build"
             echo "If this is your first time triggering for a device"
             echo "Kindly push a commit to your kernel source."
+            echo ""
         else
+            echo ""
             echo "Triggering the build for $DEVICE"
             echo "$COMMIT_ID_FETCH" >> commit-id/$DEVICE-id
             set_build_variables
 	    fi
     else
+        echo ""
         echo "Warning: No previous configuration Found!"
         echo "Kindly push a commit to your kernel source."
         echo "Re-trigger the script after this step."
         echo "This is added to ensure no issues in script arguments."
+        echo ""
         echo "$COMMIT_ID_FETCH" >> commit-id/$DEVICE-id
 	fi
 }
@@ -72,7 +79,9 @@ clone_device() {
     if [[ -f $DEVICE/Makefile ]]; then
         triggerBuild
     else
+        echo ""
         echo "Something went wrong while cloning."
+        echo ""
     fi
 }
 
