@@ -77,12 +77,18 @@ clone_device() {
     echo "Cloning device repository"
     git clone --depth=1 $GITHUB_ORG_lINK/$DEVICE $DEVICE  >/dev/null 2>&1 || cloneError
     if [[ -f $DEVICE/Makefile ]]; then
+        kernelVersion
         triggerBuild
     else
         echo ""
         echo "Something went wrong while cloning."
         echo ""
     fi
+}
+
+kernelVersion() {
+	KERNEL_VERSION="$(cat Makefile | grep PATCHLEVEL | head -n 1 | sed "s|.*=||1" | sed "s| ||g")"
+    echo $KERNEL_VERSION
 }
 
 cloneGCC() {
