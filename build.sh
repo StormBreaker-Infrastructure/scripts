@@ -145,7 +145,8 @@ genJSON() {
     GEN_JSON_BODY=$(jq --null-input \
                     --arg device "$DEVICE" \
                     --arg branch "$BRANCH" \
-                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\"}")
+                    --arg status "$STATUS" \
+                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\"}")
     echo $GEN_JSON_BODY
     echo "$GEN_JSON_BODY" >> json/$DEVICE.json
     exit 0
