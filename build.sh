@@ -158,6 +158,9 @@ genJSON() {
                     "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\", "time": \"$TIME\", "commit": \"$COMMIT_ID\", "messsage": \"$MESSAGE\", "compiler": \"$COMPILER_VERSION\"}")
     echo $GEN_JSON_BODY
     cd $CURRENT_DIR
+    if [[ -f json/$DEVICE.json ]]; then
+        rm json/$DEVICE.json
+    fi
     echo "$GEN_JSON_BODY" >> json/$DEVICE.json
     exit 0
 }
