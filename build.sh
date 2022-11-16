@@ -10,6 +10,9 @@
 [[ $# = 0 ]] && echo "No Device Input" && exit 1
 
 # Set Variables
+# Common vars
+KBUILD_BUILD_HOST="Stormbot"
+KBUILD_BUILD_USER="StormCI"
 DEVICE="$1"
 
 fetch-commit-id() {
