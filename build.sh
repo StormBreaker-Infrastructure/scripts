@@ -144,12 +144,14 @@ genJSON() {
     BRANCH="main" # Default branch of the repositories
     # TIME="$((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s)"
     TIME="$DIFF seconds"
+    COMMIT_ID=$(git log --oneline -1 | cut -f 1 -d " ")
     GEN_JSON_BODY=$(jq --null-input \
                     --arg device "$DEVICE" \
                     --arg branch "$BRANCH" \
                     --arg status "$STATUS" \
                     --arg build "$TIME" \
-                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\", "time": \"$TIME\"}")
+                    --arg commit "$COMMIT_ID" \
+                    "{"device": \"$DEVICE\", "branch": \"$BRANCH\", "status": \"$STATUS\", "time": \"$TIME\", "commit": \"$COMMIT_ID\"}")
     echo $GEN_JSON_BODY
     cd $CURRENT_DIR
     echo "$GEN_JSON_BODY" >> json/$DEVICE.json
