@@ -135,6 +135,7 @@ genJSON() {
                     --arg branch "$BRANCH" \
                     "{"device": \"$DEVICE\", "branch": \"$BRANCH\"}")
     echo $GEN_JSON_BODY
+    echo "$GEN_JSON_BODY" >> json/$DEVICE.json
     exit 0
 }
 
